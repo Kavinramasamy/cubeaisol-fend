@@ -11,6 +11,7 @@ function App() {
         <Route exact path="/" element={<AdminLogin />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/signup" element={<AdminSignUp />} />
+
       </Routes>
     </div>
   );

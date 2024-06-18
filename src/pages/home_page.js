@@ -1,11 +1,28 @@
-import { Box, Button, Flex, Image } from "@chakra-ui/react";
-import React from "react";
-import welcome from "../assets/welcome.png";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import { IoMdExit } from "react-icons/io";
 
-const HomePage = () => {
+import React, { useState } from 'react';
+import welcome from "../assets/welcome.png";
+import toast from "react-hot-toast";
+ import { IoMdExit } from "react-icons/io";
+ import { useNavigate } from "react-router-dom";
+
+import {
+  Box,
+  Button,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  IconButton,
+  useDisclosure,
+  Image,
+  Flex,
+} from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+
+const Sidebar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const theme = "dark";
   const dark = "#18222e";
   const light = "#ffffff";
@@ -14,12 +31,38 @@ const HomePage = () => {
   const navTo = useNavigate();
 
   return (
-    <Flex
+    <>
+      <Box as="header" backgroundColor="blue.200" color="white" py={4} px={8}>
+        DashBoard
+        <IconButton
+          icon={<HamburgerIcon />}
+          aria-label="Open Sidebar"
+          onClick={onOpen}
+          ml={2}
+          size="md"
+          variant="outline"
+        />
+      </Box>
+      <Drawer placement="left" backgroundColor='black' onClose={onClose} isOpen={isOpen} >
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader backgroundColor="black" color="white">Navbar</DrawerHeader>
+            <DrawerBody>
+              <Button variant="ghost">About</Button><br/>
+              <Button variant="ghost">Our Service</Button><br/>
+              <Button variant="ghost">Our Project</Button> <br/>
+              <Button variant="ghost">Our Client</Button> <br/>
+              <Button variant="ghost">Contact us</Button> 
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+      <Box as="main" p={8}
       bg={theme === "dark" ? dark : "white"}
       color={!(theme === "dark") ? dark : light}
       minH={"100vh"}
       flexDir={"column"}
-      p={5}
     >
       <Image
         p={"10% 20%"}
@@ -28,7 +71,7 @@ const HomePage = () => {
         src={welcome}
       />
       <Flex w={"100%"} justifyContent={"center"}>
-        <Button
+              <Button
           colorScheme="red"
           color={"white"}
           w={"20%"}
@@ -52,8 +95,10 @@ const HomePage = () => {
           LogOut
         </Button>
       </Flex>{" "}
-    </Flex>
+      </Box>
+      
+    </>
   );
 };
 
-export default HomePage;
+export default Sidebar;
